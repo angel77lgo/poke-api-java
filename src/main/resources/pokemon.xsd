@@ -1,0 +1,29 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://example.com/pokemon"
+           xmlns="http://example.com/pokemon"
+           elementFormDefault="qualified">
+
+    <!-- Elemento raíz de la solicitud -->
+    <xs:element name="GetPokemonRequest">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!-- Elemento raíz de la respuesta -->
+    <xs:element name="GetPokemonResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="id" type="xs:int"/>
+                <xs:element name="name" type="xs:string"/>
+                <xs:element name="abilities" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
+                <xs:element name="baseExperience" type="xs:int"/>
+                <xs:element name="heldItems" type="xs:string" maxOccurs="unbounded" minOccurs="0"/>
+                <xs:element name="locationAreaEncounters" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>

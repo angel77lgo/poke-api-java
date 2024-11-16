@@ -1,8 +1,7 @@
-package luis.sanchez.poke_api_java.types;
+package luis.sanchez.poke_api_java.models;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.boot.jackson.JsonComponent;
 
 import java.util.List;
 
