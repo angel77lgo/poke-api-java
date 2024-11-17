@@ -27,7 +27,6 @@ public class PokemonService {
 
     public GetPokemonResponse getPokemonDetailByName(String name) throws IOException {
         String finalUrl = baseUrl.concat(name);
-        System.out.println("URL: " + finalUrl);
         PokemonResponse pokemonResponse = restTemplate.getForObject(finalUrl, PokemonResponse.class);
         GetPokemonResponse getPokemonResponse = mapToSoapResponse(pokemonResponse);
 
