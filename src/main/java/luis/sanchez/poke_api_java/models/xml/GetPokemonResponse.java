@@ -3,6 +3,7 @@ package luis.sanchez.poke_api_java.models.xml;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import luis.sanchez.poke_api_java.models.Ability;
 import luis.sanchez.poke_api_java.models.HeldItem;
 
@@ -12,6 +13,7 @@ import jakarta.xml.bind.annotation.XmlRootElement;
 
 @Getter
 @Setter
+@ToString
 @XmlRootElement(name = "GetPokemonResponse")
 public class GetPokemonResponse {
     private int id;

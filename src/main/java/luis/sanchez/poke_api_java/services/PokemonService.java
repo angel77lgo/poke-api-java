@@ -1,21 +1,37 @@
 package luis.sanchez.poke_api_java.services;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import luis.sanchez.poke_api_java.models.PokemonResponse;
+import luis.sanchez.poke_api_java.models.dto.RequestLoggerDto;
 import luis.sanchez.poke_api_java.models.xml.GetPokemonResponse;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Service
 public class PokemonService {
     private final RestTemplate restTemplate = new RestTemplate();
     private final String baseUrl = "https://pokeapi.co/api/v2/pokemon/";
+    private final RequestLoggerService requestLoggerService;
+    private final HttpServletRequest request;
 
-    public GetPokemonResponse getPokemonDetailByName(String name) {
+    public PokemonService(RequestLoggerService requestLoggerService, HttpServletRequest request) {
+        this.requestLoggerService = requestLoggerService;
+        this.request = request;
+    }
+
+    public GetPokemonResponse getPokemonDetailByName(String name) throws IOException {
         String finalUrl = baseUrl.concat(name);
         System.out.println("URL: " + finalUrl);
         PokemonResponse pokemonResponse = restTemplate.getForObject(finalUrl, PokemonResponse.class);
         GetPokemonResponse getPokemonResponse = mapToSoapResponse(pokemonResponse);
+
+        String requestPayload = "name: " + name;
+
+        createLogRequest("getPokemonDetailByName", getPokemonResponse.toString(), requestPayload);
 
         return getPokemonResponse;
     }
@@ -32,4 +48,24 @@ public class PokemonService {
 
         return getPokemonResponse;
     }
+
+    private void createLogRequest(String method, String responsePayload, String requestPayload) {
+        String ipOrigin = request.getRemoteAddr();
+
+        // Create log request
+        LocalDateTime requestTime = LocalDateTime.now();
+
+        RequestLoggerDto requestLoggerDto = new RequestLoggerDto();
+
+        requestLoggerDto.setIpOrigin(ipOrigin);
+        requestLoggerDto.setRequestTime(requestTime);
+        requestLoggerDto.setRequestMethod(method);
+
+        requestLoggerDto.setRequestPayload(requestPayload);
+        requestLoggerDto.setResponsePayload(responsePayload);
+
+        requestLoggerService.createLogRequest(requestLoggerDto);
+
+    }
+
 }
