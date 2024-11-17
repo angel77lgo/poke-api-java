@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import luis.sanchez.poke_api_java.models.PokemonResponse;
 import luis.sanchez.poke_api_java.models.dto.RequestLoggerDto;
 import luis.sanchez.poke_api_java.models.xml.GetPokemonResponse;
@@ -29,9 +31,12 @@ public class PokemonService {
         PokemonResponse pokemonResponse = restTemplate.getForObject(finalUrl, PokemonResponse.class);
         GetPokemonResponse getPokemonResponse = mapToSoapResponse(pokemonResponse);
 
-        String requestPayload = "name: " + name;
+        ObjectMapper objectMapper = new ObjectMapper();
 
-        createLogRequest("getPokemonDetailByName", getPokemonResponse.toString(), requestPayload);
+        String responsePayload = objectMapper.writeValueAsString(getPokemonResponse);
+        String requestPayload = "{\"name\": \"" + name + "\"}";
+
+        createLogRequest("getPokemonDetailByName", responsePayload, requestPayload);
 
         return getPokemonResponse;
     }
