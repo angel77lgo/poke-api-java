@@ -11,9 +11,9 @@ public class PokemonResponse {
     private int id;
     private String name;
     private List<Ability> abilities;
-    public int base_experience;
-    public List<HeldItem> held_items;
-    public String location_area_encounters;
-    public List<PokemonType> types;
+    private int base_experience;
+    private List<HeldItem> held_items;
+    private String location_area_encounters;
+    private List<PokemonType> types;
 }
 
