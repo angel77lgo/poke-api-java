@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Service
 public class PokemonService {
     private final RestTemplate restTemplate = new RestTemplate();
-    private final String baseUrl = "https://pokeapi.co/api/v2/pokemon/";
+    private static final String BASE_URL = "https://pokeapi.co/api/v2/pokemon/";
     private final RequestLoggerService requestLoggerService;
     private final HttpServletRequest request;
 
@@ -26,7 +26,7 @@ public class PokemonService {
     }
 
     public GetPokemonResponse getPokemonDetailByName(String name) throws IOException {
-        String finalUrl = baseUrl.concat(name);
+        String finalUrl = BASE_URL.concat(name);
         PokemonResponse pokemonResponse = getPokemonByUrl(finalUrl);
         GetPokemonResponse getPokemonResponse = mapToSoapResponse(pokemonResponse);
 
@@ -41,7 +41,7 @@ public class PokemonService {
     }
 
     public GetPokemonResponse getPokemonDetailById(int id) throws IOException {
-        String finalUrl = baseUrl.concat(String.valueOf(id));
+        String finalUrl = BASE_URL.concat(String.valueOf(id));
 
         PokemonResponse pokemonResponse = getPokemonByUrl(finalUrl);
 
