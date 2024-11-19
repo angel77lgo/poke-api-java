@@ -14,5 +14,6 @@ public class PokemonResponse {
     public int base_experience;
     public List<HeldItem> held_items;
     public String location_area_encounters;
+    public List<PokemonType> types;
 }
 

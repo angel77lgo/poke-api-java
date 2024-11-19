@@ -6,6 +6,7 @@ import lombok.Setter;
 import lombok.ToString;
 import luis.sanchez.poke_api_java.models.Ability;
 import luis.sanchez.poke_api_java.models.HeldItem;
+import luis.sanchez.poke_api_java.models.PokemonType;
 
 import java.util.List;
 
@@ -22,4 +23,5 @@ public class GetPokemonResponse {
     private int baseExperience;
     private List<HeldItem> heldItems;
     private String locationAreaEncounters;
+    private List<PokemonType> types;
 }

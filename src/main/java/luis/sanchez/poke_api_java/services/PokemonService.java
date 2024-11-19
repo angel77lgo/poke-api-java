@@ -70,6 +70,7 @@ public class PokemonService {
         getPokemonResponse.setBaseExperience(pokemonResponse.getBase_experience());
         getPokemonResponse.setHeldItems(pokemonResponse.getHeld_items());
         getPokemonResponse.setLocationAreaEncounters(pokemonResponse.getLocation_area_encounters());
+        getPokemonResponse.setTypes(pokemonResponse.getTypes());
 
         return getPokemonResponse;
     }
