@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@XmlRootElement(name = "GetPokemonRequest", namespace = "http://example.com/pokemon")
-public class GetPokemonRequest {
+@XmlRootElement(name = "GetPokemonRequestName", namespace = "http://example.com/pokemon")
+public class GetPokemonRequestName {
     private String name;
 }

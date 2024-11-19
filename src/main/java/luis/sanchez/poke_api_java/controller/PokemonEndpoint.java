@@ -1,6 +1,7 @@
 package luis.sanchez.poke_api_java.controller;
 
-import luis.sanchez.poke_api_java.models.xml.GetPokemonRequest;
+import luis.sanchez.poke_api_java.models.xml.GetPokemonRequestId;
+import luis.sanchez.poke_api_java.models.xml.GetPokemonRequestName;
 import luis.sanchez.poke_api_java.models.xml.GetPokemonResponse;
 import luis.sanchez.poke_api_java.services.PokemonService;
 
@@ -19,10 +20,15 @@ public class PokemonEndpoint {
         this.pokemonService = pokemonService;
     }
 
-    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetPokemonRequest")
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetPokemonRequestName")
     @ResponsePayload
-    public GetPokemonResponse getPokemon(@RequestPayload GetPokemonRequest request) throws IOException {
-        System.out.println("Request: " + request.getName());
+    public GetPokemonResponse getPokemon(@RequestPayload GetPokemonRequestName request) throws IOException {
         return pokemonService.getPokemonDetailByName(request.getName());
+    }
+
+    @PayloadRoot(namespace = NAMESPACE_URI, localPart = "GetPokemonRequestId")
+    @ResponsePayload
+    public GetPokemonResponse getPokemonById(@RequestPayload GetPokemonRequestId request) throws IOException {
+        return pokemonService.getPokemonDetailById(request.getId());
     }
 }

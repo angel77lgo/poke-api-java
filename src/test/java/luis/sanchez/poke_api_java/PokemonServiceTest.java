@@ -63,4 +63,26 @@ class PokemonServiceTest {
 
         verify(requestLoggerService, times(1)).createLogRequest(any(RequestLoggerDto.class));
     }
+
+    @Test
+    void testGetPokemonDetailByIdSuccess() throws IOException {
+        int id = 1;
+        String finalUrl = "https://pokeapi.co/api/v2/pokemon/" + id;
+
+        PokemonResponse mockPokemonResponse = new PokemonResponse();
+
+        mockPokemonResponse.setId(1);
+        mockPokemonResponse.setName("bulbasaur");
+
+        when(restTemplate.getForObject(finalUrl, PokemonResponse.class)).thenReturn(mockPokemonResponse);
+        when(request.getRemoteAddr()).thenReturn("127.0.0.1");
+
+        GetPokemonResponse response = pokemonService.getPokemonDetailById(id);
+
+        assertNotNull(response);
+        assertEquals("bulbasaur", response.getName());
+        assertEquals(1, response.getId());
+
+        verify(requestLoggerService, times(1)).createLogRequest(any(RequestLoggerDto.class));
+    }
 }

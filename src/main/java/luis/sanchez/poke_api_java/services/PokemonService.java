@@ -27,7 +27,7 @@ public class PokemonService {
 
     public GetPokemonResponse getPokemonDetailByName(String name) throws IOException {
         String finalUrl = baseUrl.concat(name);
-        PokemonResponse pokemonResponse = restTemplate.getForObject(finalUrl, PokemonResponse.class);
+        PokemonResponse pokemonResponse = getPokemonByUrl(finalUrl);
         GetPokemonResponse getPokemonResponse = mapToSoapResponse(pokemonResponse);
 
         ObjectMapper objectMapper = new ObjectMapper();
@@ -38,6 +38,27 @@ public class PokemonService {
         createLogRequest("getPokemonDetailByName", responsePayload, requestPayload);
 
         return getPokemonResponse;
+    }
+
+    public GetPokemonResponse getPokemonDetailById(int id) throws IOException {
+        String finalUrl = baseUrl.concat(String.valueOf(id));
+
+        PokemonResponse pokemonResponse = getPokemonByUrl(finalUrl);
+
+        GetPokemonResponse getPokemonResponse = mapToSoapResponse(pokemonResponse);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String responsePayload = objectMapper.writeValueAsString(getPokemonResponse);
+        String requestPayload = "{\"id\": " + id + "}";
+
+        createLogRequest("getPokemonDetailById", responsePayload, requestPayload);
+
+        return getPokemonResponse;
+    }
+
+    private PokemonResponse getPokemonByUrl(String url) {
+        return restTemplate.getForObject(url, PokemonResponse.class);
     }
 
     private GetPokemonResponse mapToSoapResponse(PokemonResponse pokemonResponse) {
